@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="indicator">%1$d / %2$d</string>
+    <string name="data_not_found">Data Not Found.</string>
+
+</resources>
