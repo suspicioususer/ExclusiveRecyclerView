@@ -2,6 +2,4 @@
     <string name="app_name">SampleApplication</string>
     <string name="data_not_found">Data Not Found.</string>
     <string name="error_occurred">Error occurred!</string>
-    <string name="character_count">Character Count: %1$s</string>
-    <string name="scroll_position">Scroll Position: %1$d</string>
 </resources>

@@ -64,10 +64,10 @@
                     android:layout_marginBottom="4dp"
                     android:gravity="center"
                     android:text="@{dataProcessor.characterStatus}"
-                    app:drawableStartCompat="@drawable/ic_circle"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:text="Status" />
+                <!-- app:drawableStartCompat="@drawable/ic_circle" -->
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/actvLocation"

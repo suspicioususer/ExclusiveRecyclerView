@@ -3,6 +3,7 @@ package com.example.sampleapplication
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.exclusiverecyclerview.ExclusiveDataStatus
 import com.example.sampleapplication.model.DataResponse
 import com.example.sampleapplication.model.Information
 import com.example.sampleapplication.model.Result
@@ -21,8 +22,7 @@ class DataViewModel: ViewModel() {
     var infoDataStatus= MutableLiveData<DataStatus?>()
 
     var characterData = MutableLiveData<ArrayList<Result>>(ArrayList())
-    var characterDataStatus = MutableLiveData<DataStatus>()
-    var characterExclusiveDataStatus2 = MutableLiveData<com.example.exclusiverecyclerview.ExclusiveDataStatus>()
+    var characterDataStatus = MutableLiveData<ExclusiveDataStatus>()
 
     fun getInfo() {
         infoDataStatus.value = DataStatus.LOADING
@@ -46,8 +46,7 @@ class DataViewModel: ViewModel() {
     }
 
     fun getCharacters(index: Int) {
-        //characterDataStatus.value = DataStatus.LOADING
-        characterExclusiveDataStatus2.value = com.example.exclusiverecyclerview.ExclusiveDataStatus.LOADING
+        characterDataStatus.value = ExclusiveDataStatus.LOADING
         dataSource.getPage(index).enqueue(object : Callback<DataResponse> {
             override fun onResponse(call: Call<DataResponse>, response: Response<DataResponse>) {
                 val result = response.body()
@@ -56,17 +55,14 @@ class DataViewModel: ViewModel() {
                     val baseList = characterData.value
                     baseList?.addAll(it)
                     characterData.value = baseList
-                    //characterDataStatus.value= DataStatus.FETCHED
-                    characterExclusiveDataStatus2.value= com.example.exclusiverecyclerview.ExclusiveDataStatus.FETCHED
+                    characterDataStatus.value= ExclusiveDataStatus.FETCHED
                 } ?: run {
-                    //characterDataStatus.value = DataStatus.NOT_FOUND
-                    characterExclusiveDataStatus2.value = com.example.exclusiverecyclerview.ExclusiveDataStatus.NOT_FOUND
+                    characterDataStatus.value = ExclusiveDataStatus.NOT_FOUND
                 }
             }
 
             override fun onFailure(call: Call<DataResponse>, error: Throwable) {
-                //characterDataStatus.value = DataStatus.ERROR
-                characterExclusiveDataStatus2.value = com.example.exclusiverecyclerview.ExclusiveDataStatus.ERROR
+                characterDataStatus.value = ExclusiveDataStatus.ERROR
                 Log.d(TAG, "onFailure: ", error)
             }
         })

@@ -16,7 +16,6 @@ class ExclusiveRecyclerViewScrollController : RecyclerView.OnScrollListener() {
         val childCount = linearLayoutManager.childCount
         val itemCount = linearLayoutManager.itemCount
         val visibleFirstPosition = linearLayoutManager.findFirstVisibleItemPosition()
-        //val page = (itemCount ?: 0) / 20
 
         if (callback?.checkLoad() == false && callback?.checkBuffer() == true) {
             if ((childCount + visibleFirstPosition >= itemCount) && visibleFirstPosition > 0) {
@@ -35,13 +34,5 @@ class ExclusiveRecyclerViewScrollController : RecyclerView.OnScrollListener() {
             positionListener?.onPageChanged(position)
         }
     }
-
-    /*abstract fun loadData()
-
-    abstract fun checkBuffer(): Boolean
-
-    abstract fun checkLoad(): Boolean
-
-    abstract fun onPageChanged(position: Int)*/
 
 }

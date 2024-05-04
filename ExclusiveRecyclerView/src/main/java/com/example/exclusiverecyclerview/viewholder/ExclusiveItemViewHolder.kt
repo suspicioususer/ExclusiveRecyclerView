@@ -25,21 +25,17 @@ class ExclusiveItemViewHolder(private val binding: ExclusiveSingularItemLayoutBi
             .apply(RequestOptions().placeholder(R.drawable.ic_download).error(R.drawable.ic_error_image))
             .into(binding.acivImage)
 
-        dataProcessor.getCharacterStatus()?.let { status ->
+        /*dataProcessor.getCharacterStatus()?.let { status ->
+            var colorId = R.color.gray
             if (status.equals("Alive", true)) {
-                binding.actvStatus.compoundDrawablesRelative.forEach {
-                    it?.setTint(ContextCompat.getColor(binding.root.context, R.color.green))
-                }
+                colorId = R.color.green
             } else if (status.equals("Dead", true)) {
-                binding.actvStatus.compoundDrawablesRelative.forEach {
-                    it?.setTint(ContextCompat.getColor(binding.root.context, R.color.red))
-                }
-            } else {
-                binding.actvStatus.compoundDrawablesRelative.forEach {
-                    it?.setTint(ContextCompat.getColor(binding.root.context, R.color.gray))
-                }
+                colorId = R.color.red
             }
-        }
+            binding.actvStatus.compoundDrawablesRelative.forEach {
+                it?.setTint(ContextCompat.getColor(binding.root.context, colorId))
+            }
+        }*/
 
     }
 }
