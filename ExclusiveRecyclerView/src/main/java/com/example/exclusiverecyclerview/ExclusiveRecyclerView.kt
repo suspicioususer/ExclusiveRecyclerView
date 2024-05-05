@@ -5,12 +5,13 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
+import androidx.recyclerview.widget.LinearSnapHelper
 import com.example.exclusiverecyclerview.databinding.ExclusiveRecyclerViewLayoutBinding
 import com.example.exclusiverecyclerview.model.DataProcessor
 
 class ExclusiveRecyclerView(context: Context, attrs: AttributeSet): LinearLayout(context, attrs) {
 
-    var binding: ExclusiveRecyclerViewLayoutBinding
+    private var binding: ExclusiveRecyclerViewLayoutBinding
     private var adapter: ExclusiveRecyclerViewAdapter? = null
     private var scrollController: ExclusiveRecyclerViewScrollController? = null
 
@@ -22,8 +23,14 @@ class ExclusiveRecyclerView(context: Context, attrs: AttributeSet): LinearLayout
 
     init {
         binding = ExclusiveRecyclerViewLayoutBinding.inflate(LayoutInflater.from(context), this, true)
+        setSnapHelper()
         setAdapter()
         setScrollController()
+    }
+
+    private fun setSnapHelper() {
+        val snapHelper = LinearSnapHelper()
+        snapHelper.attachToRecyclerView(binding.rvList)
     }
 
     fun setAdapter(adapter: ExclusiveRecyclerViewAdapter) {
