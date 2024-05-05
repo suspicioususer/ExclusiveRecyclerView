@@ -1,9 +1,12 @@
 package com.example.exclusiverecyclerview
 
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.view.animation.LinearInterpolator
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearSnapHelper
 import com.example.exclusiverecyclerview.databinding.ExclusiveRecyclerViewLayoutBinding
@@ -17,12 +20,17 @@ class ExclusiveRecyclerView(context: Context, attrs: AttributeSet): LinearLayout
 
     private var callback: ExclusiveRecyclerViewScrollCallback? = null
 
+    private var firstTrigger = false
     private var totalCharacterCount = 0
     private var scrollPosition = 0
     private var loadCount: Int = 20
 
     init {
         binding = ExclusiveRecyclerViewLayoutBinding.inflate(LayoutInflater.from(context), this, true)
+        binding.acivScrollTop.setOnClickListener {
+            binding.rvList.smoothScrollToPosition(0)
+            //binding.rvList.scrollToPosition(0)
+        }
         setSnapHelper()
         setAdapter()
         setScrollController()
@@ -55,6 +63,7 @@ class ExclusiveRecyclerView(context: Context, attrs: AttributeSet): LinearLayout
             this.scrollController = ExclusiveRecyclerViewScrollController()
             this.scrollController?.positionListener = object : ExclusiveRecyclerViewPositionListener {
                 override fun onPageChanged(position: Int) {
+                    setScrollToTopVisibility(position)
                     setScrollPosition(position)
                 }
 
@@ -118,9 +127,26 @@ class ExclusiveRecyclerView(context: Context, attrs: AttributeSet): LinearLayout
         this.loadCount = count
     }
 
+    fun illustrateScroll() {
+        if (!firstTrigger) {
+            Handler(Looper.getMainLooper()).postDelayed({
+                val rvWidth = binding.rvList.width
+                binding.rvList.smoothScrollBy(rvWidth / 4, 0, LinearInterpolator(), 1000)
+            }, 500)
+            firstTrigger = true
+        }
+    }
+
     private fun setScrollPosition(position: Int) {
         this.scrollPosition = position
         binding.actvIndicator.text = context.getString(R.string.indicator, scrollPosition + 1, totalCharacterCount)
+    }
+
+    private fun setScrollToTopVisibility(position: Int) {
+        binding.acivScrollTop.visibility = View.GONE
+        if (position > 0) {
+            binding.acivScrollTop.visibility = View.VISIBLE
+        }
     }
 
 }

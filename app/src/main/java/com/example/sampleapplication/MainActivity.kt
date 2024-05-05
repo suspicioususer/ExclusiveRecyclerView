@@ -73,6 +73,7 @@ class MainActivity : AppCompatActivity() {
                     ExclusiveDataStatus.FETCHED -> {
                         page++
                         binding.ervList.refreshPageRange(page - 1)
+                        binding.ervList.illustrateScroll()
                         binding.ervList.hideProgressBar()
                     }
                     ExclusiveDataStatus.LOADING -> {
