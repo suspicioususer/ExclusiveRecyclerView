@@ -16,6 +16,15 @@ class ExclusiveRecyclerViewScrollController : RecyclerView.OnScrollListener() {
         val childCount = linearLayoutManager.childCount
         val itemCount = linearLayoutManager.itemCount
         val visibleFirstPosition = linearLayoutManager.findFirstVisibleItemPosition()
+        val visibleLastPosition = linearLayoutManager.findLastVisibleItemPosition()
+        val completelyVisibleLastPosition = linearLayoutManager.findLastCompletelyVisibleItemPosition()
+
+        val scrollPosition = if (completelyVisibleLastPosition > 0) {
+            completelyVisibleLastPosition
+        } else {
+            visibleLastPosition
+        }
+        positionListener?.onPageChanged(scrollPosition)
 
         if (callback?.checkLoad() == false && callback?.checkBuffer() == true) {
             if ((childCount + visibleFirstPosition >= itemCount) && visibleFirstPosition > 0) {
@@ -26,6 +35,7 @@ class ExclusiveRecyclerViewScrollController : RecyclerView.OnScrollListener() {
 
     }
 
+    /*
     override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
         super.onScrollStateChanged(recyclerView, newState)
         if (newState == RecyclerView.SCROLL_STATE_IDLE) {
@@ -34,5 +44,6 @@ class ExclusiveRecyclerViewScrollController : RecyclerView.OnScrollListener() {
             positionListener?.onPageChanged(position)
         }
     }
+    */
 
 }
